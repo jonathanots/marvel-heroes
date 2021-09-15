@@ -8,15 +8,11 @@ class ResultHeroModel extends Hero {
     required String name,
     required String description,
     required String thumbnail,
-    required int comicAppearences,
-    required List<String> comicsUrl,
   }) : super(
           id: id,
           name: name,
           description: description,
           thumbnail: thumbnail,
-          comicAppearences: comicAppearences,
-          comicsUrl: comicsUrl,
         );
 
   Map<String, dynamic> toMap() {
@@ -25,8 +21,6 @@ class ResultHeroModel extends Hero {
       'name': this.name,
       'description': this.description,
       'thumbnail': this.thumbnail,
-      'appearnces': this.comicAppearences,
-      'comics': this.comicsUrl
     };
   }
 
@@ -36,8 +30,6 @@ class ResultHeroModel extends Hero {
       name: map['name'],
       description: map['description'],
       thumbnail: "${map['thumbnail']['path']}.${map['thumbnail']['jpg']}",
-      comicAppearences: map['comics']['available'],
-      comicsUrl: (map['comics']['items'] as List).map((item) => item['resourceURI'].toString()).toList(),
     );
   }
 
