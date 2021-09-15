@@ -32,12 +32,13 @@ class ResultHeroModel extends Hero {
 
   factory ResultHeroModel.fromMap(Map<String, dynamic> map) {
     return ResultHeroModel(
-        id: map['id'],
-        name: map['name'],
-        description: map['description'],
-        thumbnail: "${map['thumbnail']['path']}.${map['thumbnail']['jpg']}",
-        comicAppearences: map['comics']['available'],
-        comicsUrl: map['comics']['items']);
+      id: map['id'],
+      name: map['name'],
+      description: map['description'],
+      thumbnail: "${map['thumbnail']['path']}.${map['thumbnail']['jpg']}",
+      comicAppearences: map['comics']['available'],
+      comicsUrl: (map['comics']['items'] as List).map((item) => item['resourceURI'].toString()).toList(),
+    );
   }
 
   String toJson() => json.encode(toMap());

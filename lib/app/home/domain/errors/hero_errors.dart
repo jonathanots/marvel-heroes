@@ -23,3 +23,8 @@ class HeroConflictException extends IHeroException {
 class HeroBadRequestException extends IHeroException {
   HeroBadRequestException(String message) : super(message);
 }
+
+/// Request is not authorized, invalid credentials
+class HeroUnauthorizedException extends IHeroException {
+  HeroUnauthorizedException(String message) : super(message);
+}

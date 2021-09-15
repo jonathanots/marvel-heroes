@@ -1,0 +1,6 @@
+const heroResponseGET409 = """
+  {
+    "code": 409,
+    "status": "You must pass an integer limit greater than 0."
+  }
+""";
