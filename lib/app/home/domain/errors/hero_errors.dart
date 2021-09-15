@@ -20,6 +20,6 @@ class HeroConflictException extends IHeroException {
 }
 
 /// Something bad happened while performing the request
-class HeroBadRequest extends IHeroException {
-  HeroBadRequest(String message) : super(message);
+class HeroBadRequestException extends IHeroException {
+  HeroBadRequestException(String message) : super(message);
 }

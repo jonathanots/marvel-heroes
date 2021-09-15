@@ -35,7 +35,7 @@ void main() {
   });
 
   test('should return a bad request exception', () async {
-    when(repository.fetchHero(any, any)).thenAnswer((_) async => Left(HeroBadRequest('')));
+    when(repository.fetchHero(any, any)).thenAnswer((_) async => Left(HeroBadRequestException('')));
 
     final future = fetchHeroUsecase.execute(offset: 1, limit: 1);
 
@@ -43,7 +43,7 @@ void main() {
 
     final result = await future;
 
-    expect(result.fold(id, id), isA<HeroBadRequest>());
+    expect(result.fold(id, id), isA<HeroBadRequestException>());
   });
 
   test('should return a conflict request exception', () async {
