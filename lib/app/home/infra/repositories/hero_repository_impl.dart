@@ -16,6 +16,8 @@ class HeroRepositoryImpl implements IHeroRepository {
       return Right(result);
     } on HeroConflictException catch (e) {
       return Left(e);
+    } on HeroUnauthorizedException catch (e) {
+      return Left(e);
     } on HeroBadRequestException catch (e) {
       return Left(e);
     }
