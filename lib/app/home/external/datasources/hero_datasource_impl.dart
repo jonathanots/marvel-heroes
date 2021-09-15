@@ -14,7 +14,8 @@ class HeroDatasourceImpl implements IHeroDatasource {
   @override
   Future<List<ResultHeroModel>> fetchHero(int? offset, int? limit) async {
     final response = await client.get('characters') as Response;
-    final data = jsonDecode(response.data);
+    final data = response.data is String ? jsonDecode(response.data) : response.data;
+
     if (response.statusCode == 200) {
       // Access directly array of heroes data
       return ResultHeroModel.fromJsonList(data['data']['results']);

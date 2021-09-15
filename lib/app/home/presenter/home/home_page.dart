@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
       if (state is HeroSuccess) {
         print('success fetch heroes');
       } else if (state is HeroError) {
+        print('error at fetch heroes');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error.message)));
 
         // if (state.error is HeroUnauthorizedException) {
@@ -53,6 +54,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("List of Marvel Heroes"),
+        ),
+        body: Container(color: Colors.green),
+      ),
+    );
   }
 }
