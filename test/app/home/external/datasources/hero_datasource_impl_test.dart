@@ -33,7 +33,8 @@ void main() {
   });
 
   test('should return a list of result hero', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
 
     final future = datasource.fetchHero(1, 1);
 
@@ -45,7 +46,8 @@ void main() {
   });
 
   test('should return a conflict exception, expected ob ject not found', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
 
     final future = datasource.fetchHero(1, 1);
 
@@ -58,7 +60,8 @@ void main() {
   });
 
   test('should return an unauthorized exception', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
 
     final future = datasource.fetchHero(1, 1);
 
@@ -66,7 +69,7 @@ void main() {
   });
 
   test('should return an exception caused by Dio', () async {
-    when(client.get(any)).thenThrow(Exception());
+    when(client.get(any, query: anyNamed('query'))).thenThrow(Exception());
 
     final future = datasource.fetchHero(1, 1);
 

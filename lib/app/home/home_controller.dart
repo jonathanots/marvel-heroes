@@ -9,7 +9,7 @@ abstract class _HomeControllerBase with Store {
 
   _HomeControllerBase({required this.heroStore});
 
-  Future<void> fetchHero({required int? offset, required int? limit}) async {
-    await heroStore.fetchHero(offset: offset, limit: limit);
+  Future<void> fetchHero({int? offset, int? limit, bool paginate = false}) async {
+    await heroStore.fetchHero(offset: offset, limit: limit, paginate: paginate);
   }
 }

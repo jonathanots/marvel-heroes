@@ -13,7 +13,10 @@ class HeroDatasourceImpl implements IHeroDatasource {
 
   @override
   Future<List<ResultHeroModel>> fetchHero(int? offset, int? limit) async {
-    final response = await client.get('characters') as Response;
+    final response = await client.get(
+      'characters',
+      query: '&offset=$offset&limit=$limit',
+    ) as Response;
     final data = response.data is String ? jsonDecode(response.data) : response.data;
 
     if (response.statusCode == 200) {

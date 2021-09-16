@@ -16,15 +16,42 @@ abstract class _HeroStoreBase with Store {
   @observable
   List<Hero?> heroes = ObservableList.of([]);
 
+  /// Erase current list of [heroes], and reset [offset] and [limit],
+  /// then fetch heroes.
+  @action
+  Future<void> refresh() async {
+    heroes.clear();
+    offset = 0;
+    limit = 10;
+
+    await fetchHero(offset: offset, limit: limit);
+  }
+
   @observable
   IHeroState state = HeroStart();
 
+  /// Default value [offset] = 0
+  @observable
+  int offset = 0;
+
   @action
-  Future<void> fetchHero({required int? offset, required int? limit}) async {
+  nextOffset() => offset += offset + limit;
+
+  /// Default value [limit] = 10
+  @observable
+  int limit = 10;
+
+  @action
+  setLimit(int value) => limit = value;
+
+  @action
+  Future<void> fetchHero({int? offset, int? limit, bool paginate = false}) async {
     state = HeroLoading();
 
-    final result = await _fecthHeroUsecase.execute(offset: offset, limit: limit);
+    if (paginate) nextOffset();
 
-    result.fold((l) => state = HeroError(l), (r) => [(heroes = r), (state = HeroSuccess())]);
+    final result = await _fecthHeroUsecase.execute(offset: paginate ? this.offset : offset, limit: limit);
+
+    result.fold((l) => state = HeroError(l), (r) => [(heroes.addAll(r)), (state = HeroSuccess())]);
   }
 }

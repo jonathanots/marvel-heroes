@@ -82,7 +82,8 @@ void main() {
   });
 
   test('should return a list of heroes', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
 
     await controller.fetchHero(offset: 1, limit: 1);
 
@@ -92,7 +93,8 @@ void main() {
   });
 
   test('should return an unauthorized exception', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
 
     await controller.fetchHero(offset: 1, limit: 1);
 
@@ -106,7 +108,8 @@ void main() {
   });
 
   test('should return a conflict exception, but in this case return a empty list of heroes', () async {
-    when(client.get(any)).thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
+    when(client.get(any, query: anyNamed('query')))
+        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
 
     await controller.fetchHero(offset: 1, limit: 1);
 

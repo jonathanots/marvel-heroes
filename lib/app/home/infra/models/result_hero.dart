@@ -29,7 +29,7 @@ class ResultHeroModel extends Hero {
       id: map['id'],
       name: map['name'],
       description: map['description'],
-      thumbnail: "${map['thumbnail']['path']}.${map['thumbnail']['jpg']}",
+      thumbnail: "${map['thumbnail']['path']}.${map['thumbnail']['extension']}",
     );
   }
 

@@ -39,19 +39,83 @@ mixin _$HeroStore on _HeroStoreBase, Store {
     });
   }
 
+  final _$offsetAtom = Atom(name: '_HeroStoreBase.offset');
+
+  @override
+  int get offset {
+    _$offsetAtom.reportRead();
+    return super.offset;
+  }
+
+  @override
+  set offset(int value) {
+    _$offsetAtom.reportWrite(value, super.offset, () {
+      super.offset = value;
+    });
+  }
+
+  final _$limitAtom = Atom(name: '_HeroStoreBase.limit');
+
+  @override
+  int get limit {
+    _$limitAtom.reportRead();
+    return super.limit;
+  }
+
+  @override
+  set limit(int value) {
+    _$limitAtom.reportWrite(value, super.limit, () {
+      super.limit = value;
+    });
+  }
+
+  final _$refreshAsyncAction = AsyncAction('_HeroStoreBase.refresh');
+
+  @override
+  Future<void> refresh() {
+    return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
   final _$fetchHeroAsyncAction = AsyncAction('_HeroStoreBase.fetchHero');
 
   @override
-  Future<void> fetchHero({required int? offset, required int? limit}) {
-    return _$fetchHeroAsyncAction
-        .run(() => super.fetchHero(offset: offset, limit: limit));
+  Future<void> fetchHero({int? offset, int? limit, bool paginate = false}) {
+    return _$fetchHeroAsyncAction.run(() =>
+        super.fetchHero(offset: offset, limit: limit, paginate: paginate));
+  }
+
+  final _$_HeroStoreBaseActionController =
+      ActionController(name: '_HeroStoreBase');
+
+  @override
+  dynamic nextOffset() {
+    final _$actionInfo = _$_HeroStoreBaseActionController.startAction(
+        name: '_HeroStoreBase.nextOffset');
+    try {
+      return super.nextOffset();
+    } finally {
+      _$_HeroStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLimit(int value) {
+    final _$actionInfo = _$_HeroStoreBaseActionController.startAction(
+        name: '_HeroStoreBase.setLimit');
+    try {
+      return super.setLimit(value);
+    } finally {
+      _$_HeroStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
 heroes: ${heroes},
-state: ${state}
+state: ${state},
+offset: ${offset},
+limit: ${limit}
     ''';
   }
 }
