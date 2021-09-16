@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
@@ -7,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:marvel_heroes/app/app_module.dart';
 import 'package:marvel_heroes/app/home/domain/errors/hero_errors.dart';
 import 'package:marvel_heroes/app/home/external/datasources/hero_datasource_impl.dart';
+import 'package:marvel_heroes/app/home/infra/models/result_comic.dart';
 import 'package:marvel_heroes/app/home/infra/models/result_hero.dart';
+import 'package:marvel_heroes/app/home/utils/hero_comics_get_200.dart';
 import 'package:marvel_heroes/app/home/utils/hero_response_get_200.dart';
 import 'package:marvel_heroes/app/home/utils/hero_response_get_401.dart';
 import 'package:marvel_heroes/app/home/utils/hero_response_get_409.dart';
@@ -32,47 +32,95 @@ void main() {
     initModule(AppModule(), replaceBinds: [Bind<IClient>((i) => client)]);
   });
 
-  test('should return a list of result hero', () async {
-    when(client.get(any, query: anyNamed('query')))
-        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
+  group('fetch hero usecase', () {
+    test('should return a list of result hero', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET200, statusCode: 200));
 
-    final future = datasource.fetchHero(1, 1);
+      final future = datasource.fetchHero(1, 1);
 
-    expect(future, completes);
+      expect(future, completes);
 
-    final result = await future;
+      final result = await future;
 
-    expect(result, isA<List<ResultHeroModel>>());
+      expect(result, isA<List<ResultHeroModel>>());
+    });
+
+    test('should return a conflict exception, expected ob ject not found', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
+
+      final future = datasource.fetchHero(1, 1);
+
+      expect(future, completes);
+
+      final result = await future;
+
+      // expect(result, throwsA(isA<HeroConflictException>()));
+      expect(result, isA<List<ResultHeroModel>>());
+    });
+
+    test('should return an unauthorized exception', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+
+      final future = datasource.fetchHero(1, 1);
+
+      expect(future, throwsA(isA<HeroUnauthorizedException>()));
+    });
+
+    test('should return an exception caused by Dio', () async {
+      when(client.get(any, query: anyNamed('query'))).thenThrow(Exception());
+
+      final future = datasource.fetchHero(1, 1);
+
+      expect(future, throwsA(isA<Exception>()));
+    });
   });
 
-  test('should return a conflict exception, expected ob ject not found', () async {
-    when(client.get(any, query: anyNamed('query')))
-        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
+  group('fetch hero comics usecase', () {
+    test('should return a list of result comic', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroComicsResponseGET200, statusCode: 200));
 
-    final future = datasource.fetchHero(1, 1);
+      final future = datasource.fetchHeroComics(1, 1, 1);
 
-    expect(future, completes);
+      expect(future, completes);
 
-    final result = await future;
+      final result = await future;
 
-    // expect(result, throwsA(isA<HeroConflictException>()));
-    expect(result, isA<List<ResultHeroModel>>());
-  });
+      expect(result, isA<List<ResultComicModel>>());
+    });
 
-  test('should return an unauthorized exception', () async {
-    when(client.get(any, query: anyNamed('query')))
-        .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+    test('should return a conflict exception, expected ob ject not found', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
 
-    final future = datasource.fetchHero(1, 1);
+      final future = datasource.fetchHeroComics(1, 1, 1);
 
-    expect(future, throwsA(isA<HeroUnauthorizedException>()));
-  });
+      expect(future, completes);
 
-  test('should return an exception caused by Dio', () async {
-    when(client.get(any, query: anyNamed('query'))).thenThrow(Exception());
+      final result = await future;
 
-    final future = datasource.fetchHero(1, 1);
+      // expect(result, throwsA(isA<HeroConflictException>()));
+      expect(result, isA<List<ResultComicModel>>());
+    });
 
-    expect(future, throwsA(isA<Exception>()));
+    test('should return an unauthorized exception', () async {
+      when(client.get(any, query: anyNamed('query')))
+          .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+
+      final future = datasource.fetchHeroComics(1, 1, 1);
+
+      expect(future, throwsA(isA<HeroUnauthorizedException>()));
+    });
+
+    test('should return an exception caused by Dio', () async {
+      when(client.get(any, query: anyNamed('query'))).thenThrow(Exception());
+
+      final future = datasource.fetchHeroComics(1, 1, 1);
+
+      expect(future, throwsA(isA<Exception>()));
+    });
   });
 }

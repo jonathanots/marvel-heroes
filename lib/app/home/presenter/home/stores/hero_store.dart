@@ -50,7 +50,7 @@ abstract class _HeroStoreBase with Store {
 
     if (paginate) nextOffset();
 
-    final result = await _fecthHeroUsecase.execute(offset: paginate ? this.offset : offset, limit: limit);
+    final result = await _fecthHeroUsecase.execute(offset: paginate ? this.offset : offset, limit: paginate ? this.limit : limit);
 
     result.fold((l) => state = HeroError(l), (r) => [(heroes.addAll(r)), (state = HeroSuccess())]);
   }

@@ -20,7 +20,7 @@ class _ListHeroesWidgetState extends State<ListHeroesWidget> {
   final _scrollController = ScrollController();
 
   _loadMore() async {
-    await controller.fetchHero(offset: 11, limit: 10, paginate: true);
+    await controller.fetchHero(paginate: true);
   }
 
   @override

@@ -4,6 +4,7 @@
 
 import 'dart:async' as _i3;
 
+import 'package:marvel_heroes/app/home/infra/models/result_comic.dart' as _i5;
 import 'package:marvel_heroes/app/home/infra/models/result_hero.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -34,4 +35,12 @@ class MockHeroDatasource extends _i1.Mock implements _i2.HeroDatasource {
               returnValue: Future<List<_i4.ResultHeroModel>>.value(
                   <_i4.ResultHeroModel>[]))
           as _i3.Future<List<_i4.ResultHeroModel>>);
+  @override
+  _i3.Future<List<_i5.ResultComicModel>> fetchHeroComics(
+          int? heroId, int? offset, int? limit) =>
+      (super.noSuchMethod(
+              Invocation.method(#fetchHeroComics, [heroId, offset, limit]),
+              returnValue: Future<List<_i5.ResultComicModel>>.value(
+                  <_i5.ResultComicModel>[]))
+          as _i3.Future<List<_i5.ResultComicModel>>);
 }

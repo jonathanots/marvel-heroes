@@ -4,6 +4,11 @@ abstract class IHeroException implements Exception {
   IHeroException(this.message);
 }
 
+/// Some error related at one [data] about the hero variable into the usecase
+class HeroDataException extends IHeroException {
+  HeroDataException(String message) : super(message);
+}
+
 /// Some error related at [offset] variable into the usecase
 class HeroOffsetException extends IHeroException {
   HeroOffsetException(String message) : super(message);
