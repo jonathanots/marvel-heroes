@@ -7,7 +7,7 @@ class ResultComicModel extends Comic {
     required int id,
     required String title,
     required double issueNumber,
-    required String description,
+    required String? description,
     required int pageCount,
     required String thumbnail,
   }) : super(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marvel_heroes/app/home/domain/entities/hero.dart' as char;
 import 'package:marvel_heroes/shared/utils/some_functions.dart';
+import 'package:marvel_heroes/shared/widgets/network_image_widget.dart';
 
 class HeroCardWidget extends StatelessWidget {
   final char.Hero character;
@@ -11,7 +13,7 @@ class HeroCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => print('tapped'),
+      onTap: () => Modular.to.pushNamed('/character/${character.id}', arguments: character),
       child: Container(
         height: 200,
         width: getWidth(context, factor: 0.33),
@@ -28,9 +30,12 @@ class HeroCardWidget extends StatelessWidget {
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
                 ),
-                child: Image.network(
-                  character.thumbnail,
-                  fit: BoxFit.fill,
+                child: Hero(
+                  tag: 'char_${character.id}',
+                  child: NetworkImageWidget(
+                    url: character.thumbnail,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),

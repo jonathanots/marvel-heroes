@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marvel_heroes/app/home/home_controller.dart';
 import 'package:marvel_heroes/app/home/presenter/home/states/hero_state.dart';
 import 'package:marvel_heroes/app/home/presenter/home/widgets/list_heroes_widget.dart';
+import 'package:marvel_heroes/shared/widgets/custom_text_widget.dart';
 import 'package:mobx/mobx.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,22 @@ class _HomePageState extends State<HomePage> {
     return Container(
       color: Colors.black45,
       alignment: Alignment.center,
-      child: CircularProgressIndicator(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 20),
+          CustomTextWidget(
+            text: 'Loading more data...',
+            textStyle: GoogleFonts.roboto(),
+            color: Colors.white,
+            fontWeight: FontWeight.w300,
+            fontSize: 18,
+            mainAxisAlignment: MainAxisAlignment.center,
+          )
+        ],
+      ),
     );
   });
 

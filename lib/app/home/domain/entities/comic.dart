@@ -2,7 +2,8 @@ class Comic {
   final int id;
   final String title;
   final double issueNumber;
-  final String description;
+  // Some comics has `null` for description
+  final String? description;
   final int pageCount;
   final String thumbnail;
 
