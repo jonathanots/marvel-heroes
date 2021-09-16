@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
@@ -107,7 +105,7 @@ void main() {
 
       final result = controller.heroStore.heroes;
 
-      expect(result, isA<List<Hero>>());
+      expect(result, isA<List<Hero?>>());
     });
 
     test('should return an unauthorized exception', () async {
@@ -137,7 +135,7 @@ void main() {
 
       final heroes = controller.heroStore.heroes;
 
-      expect(heroes, isA<List<Hero>>());
+      expect(heroes, isA<List<Hero?>>());
 
       // expect(result, isA<HeroError>());
 
@@ -152,16 +150,20 @@ void main() {
       when(client.get(any, query: anyNamed('query')))
           .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroComicsResponseGET200, statusCode: 200));
 
+      controller.comicStore.setHeroId(1);
+
       await controller.fetchHeroComics(offset: 1, limit: 1);
 
       final result = controller.comicStore.comics;
 
-      expect(result, isA<List<Comic>>());
+      expect(result, isA<List<Comic?>>());
     });
 
     test('should return an unauthorized exception', () async {
       when(client.get(any, query: anyNamed('query')))
           .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET401, statusCode: 401));
+
+      controller.comicStore.setHeroId(1);
 
       await controller.fetchHeroComics(offset: 1, limit: 1);
 
@@ -178,6 +180,8 @@ void main() {
       when(client.get(any, query: anyNamed('query')))
           .thenAnswer((_) async => Response(requestOptions: RequestOptions(path: ''), data: heroResponseGET409, statusCode: 409));
 
+      controller.comicStore.setHeroId(1);
+
       await controller.fetchHeroComics(offset: 1, limit: 1);
 
       final result = controller.comicStore.state;
@@ -186,7 +190,7 @@ void main() {
 
       final comics = controller.comicStore.comics;
 
-      expect(comics, isA<List<Comic>>());
+      expect(comics, isA<List<Comic?>>());
 
       // expect(result, isA<HeroComicError>());
 
