@@ -1,16 +1,20 @@
-# marvel_heroes
+# Marvel Heroes
 
-A new Flutter project.
+This repository contains a single project developed to a job offer proposal. You can see that was used the following techonlogies/concepts:
+
+- Flutter Modular & Slidy
+- Mobx
+- SOLID principles
+- Unit Tests
+- Clean Arch
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Install the Flutter Modular, to do this you can visit the following website to get more details about this package:
+[https://pub.dev/packages/flutter_modular].
 
-A few resources to get you started if this is your first Flutter project:
+If you did the installation of Flutter Modular and Slidy, then you can clone this repository and run the pub get command on your terminal.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The next step is run a script that will call the build runner to generate our part file to support MobX Codegen and Mocks from Mockito package.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+At this point you can run the project. Have a good work!

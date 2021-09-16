@@ -2,7 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:marvel_heroes/app/home/home_module.dart';
 import 'package:marvel_heroes/shared/clients/implementations/dio_client_impl.dart';
 import 'package:marvel_heroes/shared/clients/interceptors/track_interceptor.dart';
-import 'package:marvel_heroes/shared/utils/contants.dart';
+import 'package:marvel_heroes/shared/utils/constants.dart';
 
 class AppModule extends Module {
   @override
