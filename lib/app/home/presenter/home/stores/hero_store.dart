@@ -35,7 +35,7 @@ abstract class _HeroStoreBase with Store {
   int offset = 0;
 
   @action
-  nextOffset() => offset += offset + limit;
+  nextOffset() => offset += limit;
 
   /// Default value [limit] = 10
   @observable
